@@ -1,8 +1,4 @@
 #
-# Conditional build:
-%bcond_with	tests		# build with tests
-%bcond_without	tests		# build without tests
-#
 Summary:	C code generator that generates command line options parsers
 Summary(pl.UTF-8):	Generator kodu C generujący paser opcji linii poleceń
 Name:		gengetopt
@@ -13,6 +9,9 @@ Group:		Development/Tools
 Source0:	http://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.gz
 # Source0-md5:	3877433c69902a26887ad65c1a2d60eb
 URL:		http://www.gnu.org/software/gengetopt/
+BuildRequires:  autoconf >= 2.58
+BuildRequires:  automake
+BuildRequires:  libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
