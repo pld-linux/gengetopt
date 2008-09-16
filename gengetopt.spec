@@ -9,9 +9,9 @@ Group:		Development/Tools
 Source0:	http://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.gz
 # Source0-md5:	3877433c69902a26887ad65c1a2d60eb
 URL:		http://www.gnu.org/software/gengetopt/
-BuildRequires:  autoconf >= 2.58
-BuildRequires:  automake
-BuildRequires:  libtool
+BuildRequires:	autoconf >= 2.58
+BuildRequires:	automake
+BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,7 +41,7 @@ Przykładowe pliki dla gengetopt.
 %setup -q
 
 %build
-%{__libtoolize} --force
+%{__libtoolize}
 %{__aclocal} -I gl/m4
 %{__autoconf}
 %{__autoheader}
