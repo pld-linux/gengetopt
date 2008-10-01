@@ -52,7 +52,7 @@ Przykładowe pliki dla gengetopt.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_examplesdir}-%{version}/%{name},%{_datadir}/%{name},%{_infodir},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_examplesdir}/%{name}-%{version},%{_datadir}/%{name},%{_infodir},%{_mandir}/man1}
 
 install src/%{name} $RPM_BUILD_ROOT%{_bindir}/gengetopt
 install doc/*.{c,cc,ggo,h} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
