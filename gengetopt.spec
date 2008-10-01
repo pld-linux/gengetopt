@@ -3,7 +3,7 @@ Summary:	C code generator that generates command line options parsers
 Summary(pl.UTF-8):	Generator kodu C generujący paser opcji linii poleceń
 Name:		gengetopt
 Version:	2.22.1
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		Development/Tools
 Source0:	http://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.gz
