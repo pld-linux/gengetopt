@@ -52,14 +52,14 @@ Przykładowe pliki dla gengetopt.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_examplesdir}/%{name},%{_datadir}/%{name},%{_infodir},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_examplesdir}-%{version}/%{name},%{_datadir}/%{name},%{_infodir},%{_mandir}/man1}
 
-install src/gengetopt $RPM_BUILD_ROOT%{_bindir}/gengetopt
-install doc/*.{c,cc,ggo,h} $RPM_BUILD_ROOT%{_examplesdir}/gengetopt
-install doc/README.example $RPM_BUILD_ROOT%{_examplesdir}/gengetopt
-install src/gnugetopt.h $RPM_BUILD_ROOT%{_datadir}/gengetopt/gnugetopt.h
-install src/getopt.c $RPM_BUILD_ROOT%{_datadir}/gengetopt/getopt.c
-install src/getopt1.c $RPM_BUILD_ROOT%{_datadir}/gengetopt/getopt1.c
+install src/%{name} $RPM_BUILD_ROOT%{_bindir}/gengetopt
+install doc/*.{c,cc,ggo,h} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install doc/README.example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install src/gnugetopt.h $RPM_BUILD_ROOT%{_datadir}/%{name}/gnugetopt.h
+install src/getopt.c $RPM_BUILD_ROOT%{_datadir}/%{name}/getopt.c
+install src/getopt1.c $RPM_BUILD_ROOT%{_datadir}/%{name}/getopt1.c
 install doc/gengetopt.info $RPM_BUILD_ROOT%{_infodir}/gengetopt.info
 install doc/gengetopt.1 $RPM_BUILD_ROOT%{_mandir}/man1/gengetopt.1
 
@@ -76,4 +76,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files examples
 %defattr(644,root,root,755)
-%{_examplesdir}/%{name}
+%{_examplesdir}/%{name}-%{version}
