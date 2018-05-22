@@ -1,0 +1,14 @@
+--- gengetopt-2.22.6/doc/gengetopt.texinfo.orig	2012-11-02 18:43:24.000000000 +0100
++++ gengetopt-2.22.6/doc/gengetopt.texinfo	2018-05-22 17:14:01.845071479 +0200
+@@ -50,9 +50,9 @@
+ @end quotation
+ @end copying
+ 
+-@dircategory GNU programming tools
++@dircategory Programming tools:
+ @direntry
+-* Gengetopt: (gengetopt).         Create command line options parsers
++* Gengetopt: (gengetopt).		Create command line options parsers
+ @end direntry
+ 
+ @titlepage

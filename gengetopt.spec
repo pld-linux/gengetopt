@@ -1,17 +1,20 @@
-#
 Summary:	C code generator that generates command line options parsers
-Summary(pl.UTF-8):	Generator kodu C generujący paser opcji linii poleceń
+Summary(pl.UTF-8):	Generator kodu C generujący analizatory opcji linii poleceń
 Name:		gengetopt
-Version:	2.22.1
+Version:	2.22.6
 Release:	1
 License:	GPL v3+
 Group:		Development/Tools
 Source0:	http://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.gz
-# Source0-md5:	3877433c69902a26887ad65c1a2d60eb
+# Source0-md5:	29749a48dda69277ab969c510597a14e
+Patch0:		%{name}-info.patch
+Patch1:		%{name}-am.patch
 URL:		http://www.gnu.org/software/gengetopt/
 BuildRequires:	autoconf >= 2.58
 BuildRequires:	automake
-BuildRequires:	libtool
+BuildRequires:	help2man
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:1.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -19,56 +22,61 @@ Gengetopt generates a C function that uses getopt_long function to
 parse the command line options, to validate them and fills a struct.
 
 %description -l pl.UTF-8
-Gengetopt jest to narzędzie generujące kod w języku C, który służy do
-parsowania opcji przekazanych w wierszu poleceń z użyciem biblioteki
-getopt. Kod wygenerowany przez gengetopt potrafi obsłużyć zarówno
-krótkie opcje, jak i długie - sprawdzić poprawność przekazazych
-argumentów i wypełnić odpowiednie struktury.
+Gengetopt jest to narzędzie generujące kod w języku C, wykorzystujący
+funkcję getopt_long do analizy opcji linii poleceń, sprawdzania ich
+poprawności i umieszczania ich w strukturze.
 
 %package examples
 Summary:	gengetopt examples
-Summary(pl.UTF-8):	Przykłady gengetopt
+Summary(pl.UTF-8):	Przykłady do gengetopt
 Group:		Documentation
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description examples
 Gengetopt examples.
 
 %description examples -l pl.UTF-8
-Przykładowe pliki dla gengetopt.
+Przykłady do gengetopt.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
-%{__aclocal} -I gl/m4
+%{__aclocal} -I m4 -I gl/m4
 %{__autoconf}
 %{__autoheader}
-%{__automake} --add-missing --gnu
+%{__automake} --gnu
 %configure
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_examplesdir}/%{name}-%{version},%{_datadir}/%{name},%{_infodir},%{_mandir}/man1}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-install src/%{name} $RPM_BUILD_ROOT%{_bindir}/gengetopt
-install doc/*.{c,cc,ggo,h} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install doc/README.example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install src/gnugetopt.h $RPM_BUILD_ROOT%{_datadir}/%{name}/gnugetopt.h
-install src/getopt.c $RPM_BUILD_ROOT%{_datadir}/%{name}/getopt.c
-install src/getopt1.c $RPM_BUILD_ROOT%{_datadir}/%{name}/getopt1.c
-install doc/gengetopt.info $RPM_BUILD_ROOT%{_infodir}/gengetopt.info
-install doc/gengetopt.1 $RPM_BUILD_ROOT%{_mandir}/man1/gengetopt.1
+cp -p doc/*.{c,cc,ggo,h} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p doc/README.example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/gengetopt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
+%postun	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog LICENSE NEWS README THANKS TODO doc/{gengetopt,index}.html
 %attr(755,root,root) %{_bindir}/gengetopt
 %{_mandir}/man1/gengetopt.1*
 %{_infodir}/gengetopt.info*

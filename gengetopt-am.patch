@@ -1,0 +1,11 @@
+--- gengetopt-2.22.6/src/Makefile.am.orig	2012-11-02 14:26:54.000000000 +0100
++++ gengetopt-2.22.6/src/Makefile.am	2018-05-22 17:14:37.828404404 +0200
+@@ -51,7 +51,7 @@
+ 	@LTLIBOBJS@ \
+ 	skels/libgen.la
+ 
+-LDADD = $(top_builddir)/src/libgengetopt.la
++LDADD = libgengetopt.la
+ 
+ EXTRA_DIST = parser.h argsdef.h gengetopt.h ggos.h gm.h gnugetopt.h \
+ cmdline.c cmdline.h \
