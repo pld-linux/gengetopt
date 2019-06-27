@@ -1,21 +1,22 @@
 Summary:	C code generator that generates command line options parsers
 Summary(pl.UTF-8):	Generator kodu C generujący analizatory opcji linii poleceń
 Name:		gengetopt
-Version:	2.22.6
+Version:	2.23
 Release:	1
 License:	GPL v3+
 Group:		Development/Tools
-Source0:	http://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.gz
-# Source0-md5:	29749a48dda69277ab969c510597a14e
+Source0:	https://ftp.gnu.org/gnu/gengetopt/%{name}-%{version}.tar.xz
+# Source0-md5:	ea165d618640dbdecb42ae4491337965
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-am.patch
 URL:		http://www.gnu.org/software/gengetopt/
 BuildRequires:	autoconf >= 2.58
 BuildRequires:	automake
 BuildRequires:	help2man
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	texinfo
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,7 +43,6 @@ Przykłady do gengetopt.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -65,6 +65,8 @@ cp -p doc/README.example $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/gengetopt
+# .texi meant just for index.html(?)
+%{__rm} $RPM_BUILD_ROOT%{_infodir}/index.info
 
 %clean
 rm -rf $RPM_BUILD_ROOT
